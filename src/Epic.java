@@ -14,7 +14,7 @@ public class Epic extends Task {
 
     @Override
     public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> allTasks = super.getAllTasks(); // Вызываем родительский метод
+        ArrayList<Task> allTasks = super.getAllTasks();
         allTasks.addAll(subtasks);
         return allTasks;
     }
@@ -25,7 +25,6 @@ public class Epic extends Task {
                 "subtasks=" + subtasks +
                 '}';
     }
-
 
     public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
