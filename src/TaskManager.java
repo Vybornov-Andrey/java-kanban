@@ -35,7 +35,7 @@ public class TaskManager {
     public HashSet<Task> getAllTasks() {
         HashSet<Task> allTasks = new HashSet<>(taskMap.values());
         for (Epic epic : epicMap.values()) {
-            allTasks.addAll(epic.getSubtasks());
+            allTasks.addAll(epic.getAllTasks());
         }
         return allTasks;
     }

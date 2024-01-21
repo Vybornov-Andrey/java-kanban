@@ -19,9 +19,9 @@ public class Main {
         taskManager.createSubtask(thirdSubtask);
 
         System.out.println("\nЭпик с подзадачами");
-        firstEpic.addSubtask(firstSubtask);
-        firstEpic.addSubtask(secondSubtask);
-        firstEpic.addSubtask(thirdSubtask);
+        firstEpic.addSubtask(firstSubtask.getId());
+        firstEpic.addSubtask(secondSubtask.getId());
+        firstEpic.addSubtask(thirdSubtask.getId());
         System.out.println(firstEpic);
 
         System.out.println("\nДобавление задач и эпика в менеджер");
@@ -49,7 +49,7 @@ public class Main {
         }
 
         System.out.println("\nПроверяем, все ли подзадачи в эпике завершены");
-        System.out.println(firstEpic.epicComplete());
+        System.out.println(firstEpic.epicComplete(taskManager));
 
         System.out.println("\nУдаление задачи по идентификатору");
         taskManager.removeTaskId(secondTask.getId());

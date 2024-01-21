@@ -1,42 +1,48 @@
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Epic extends Task {
-    private ArrayList<Subtask> subtasks;
+    private Set<Integer> subtaskIds;
 
     public Epic(String titleTask, String description, int id) {
         super(titleTask, description, id);
-        this.subtasks = new ArrayList<>();
-    }
-
-    public ArrayList<Subtask> getSubtasks() {
-        return subtasks;
-    }
-
-    @Override
-    public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> allTasks = super.getAllTasks();
-        allTasks.addAll(subtasks);
-        return allTasks;
+        this.subtaskIds = new HashSet<>();
     }
 
     @Override
     public String toString() {
         return "Epic{" +
-                "subtasks=" + subtasks +
+                "subtasks=" + subtaskIds +
                 '}';
     }
 
-    public void addSubtask(Subtask subtask) {
-        subtasks.add(subtask);
+    public void addSubtask(int subtaskId) {
+        subtaskIds.add(subtaskId);
     }
 
-    public boolean epicComplete() {
-        for (Subtask subtask : subtasks) {
-            if (subtask.getStatus() != TaskStatus.DONE) {
+    public boolean epicComplete(TaskManager taskManager) {
+        for (int subtaskId : subtaskIds) {
+            Subtask subtask = (Subtask) taskManager.getTaskId(subtaskId);
+            if (subtask == null || subtask.getStatus() != TaskStatus.DONE) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(subtaskIds, epic.subtaskIds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subtaskIds);
     }
 }
 
