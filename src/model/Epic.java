@@ -1,3 +1,7 @@
+package model;
+
+import service.TaskManager;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,13 +16,17 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "model.Epic{" +
                 "subtasks=" + subtaskIds +
                 '}';
     }
 
     public void addSubtask(int subtaskId) {
         subtaskIds.add(subtaskId);
+    }
+
+    public Set<Integer> getSubtaskIds() {
+        return subtaskIds;
     }
 
     public boolean epicComplete(TaskManager taskManager) {
@@ -30,6 +38,8 @@ public class Epic extends Task {
         }
         return true;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

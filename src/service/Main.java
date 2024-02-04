@@ -1,8 +1,14 @@
+package service;
 
+
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import model.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         System.out.println("Создание задач");
         Task firstTask = taskManager.createTask("Задача № 1", "Описание задачи № 1");
