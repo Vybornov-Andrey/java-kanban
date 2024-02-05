@@ -65,9 +65,15 @@ public class Main {
             System.out.println(task.getTitleTask() + " - " + task.getStatus());
         }
 
+        System.out.println("\nСписок всех эпиков:");
+        for (Epic epic : taskManager.getAllEpics()) {
+            System.out.println(epic.getTitleTask());
+        }
+
         System.out.println("\nУдаление всех задач");
         taskManager.clearArrayList();
         System.out.println(taskManager.getAllTasks());
+
     }
 }
 

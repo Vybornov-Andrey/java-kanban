@@ -17,7 +17,7 @@ class EpicTest {
     @BeforeEach
     void beforeEach() {
         HistoryManager historyManager = new InMemoryHistoryManager();
-        taskManager = new InMemoryTaskManager(historyManager);
+        taskManager = new InMemoryTaskManager();
         epic = new Epic("Эпик 1", "Описание", 1);
     }
 

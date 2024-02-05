@@ -18,6 +18,8 @@ public interface TaskManager {
 
     HashSet<Task> getAllTasks();
 
+    HashSet<Epic> getAllEpics();
+
     void clearArrayList();
 
     Task getTaskId(int taskId);

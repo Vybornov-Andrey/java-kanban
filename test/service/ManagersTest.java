@@ -9,9 +9,9 @@ class ManagersTest {
     @Test
     void shouldDefaultTaskManager() {
         TaskManager taskManager = Managers.getDefault();
-        assertNotNull(taskManager);
-        assertTrue(taskManager instanceof InMemoryTaskManager);
+        assertInstanceOf(InMemoryTaskManager.class, taskManager);
     }
+
 
     // Проверяем, что historyManager не null и historyManager является экземпляром InMemoryHistoryManager
     @Test
