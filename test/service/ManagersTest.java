@@ -17,8 +17,7 @@ class ManagersTest {
     @Test
     void shouldDefaultHistoryManager() {
         HistoryManager historyManager = Managers.getDefaultHistory();
-        assertNotNull(historyManager);
-        assertTrue(historyManager instanceof InMemoryHistoryManager);
+        assertInstanceOf(InMemoryHistoryManager.class, historyManager);
     }
 
 }

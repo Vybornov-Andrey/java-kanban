@@ -1,70 +1,60 @@
 package service;
 
+
 import model.Task;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class InMemoryHistoryManagerTest {
 
-    // Проверяем добавление задач в историю и  корректное извлечение
-    @Test
-    void shouldAddTaskInHistoryList() {
-        HistoryManager historyManager = new InMemoryHistoryManager();
-        Task task1 = new Task("Задача 1", "Описание 1", 1);
-        Task task2 = new Task("Задача 2", "Описание 2", 2);
+    private InMemoryHistoryManager historyManager;
+    private Task task1;
+    private Task task2;
+    private Task task3;
 
-        historyManager.addTaskInHistoryList(task1);
-        historyManager.addTaskInHistoryList(task2);
-
-        List<Task> history = historyManager.getHistory();
-        assertEquals(2, history.size());
-        assertEquals(task1, history.get(0));
-        assertEquals(task2, history.get(1));
+    @BeforeEach
+    void setUp() {
+        historyManager = new InMemoryHistoryManager();
+        task1 = new Task("Задача 1", "Описание задачи 1", 1);
+        task2 = new Task("Задача 2", "Описание задачи 2", 2);
+        task3 = new Task("Задача 3", "Описание задачи 3", 3);
     }
 
-    // Проверяем, что задача == null не добавляется в историю
     @Test
-    void shouldAddTaskInHistoryList_NullTask() {
-        HistoryManager historyManager = new InMemoryHistoryManager();
-
-        historyManager.addTaskInHistoryList(null);
-
-        List<Task> history = historyManager.getHistory();
-        assertEquals(0, history.size());
+    void addTaskToHistory() {
+        historyManager.add(task1);
+        assertEquals(1, historyManager.getHistory().size(), "Задача должна быть добавлена в историю");
     }
 
-    // Проверяем, что история хранит не более 10 последних задач
     @Test
-    void shouldAddTaskInHistoryList_MaxSize() {
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-
-        for (int i = 1; i <= 15; i++) {
-            historyManager.addTaskInHistoryList(new Task("Задача " + i, "Описание " + i, i));
-        }
-
-        List<Task> history = historyManager.getHistory();
-        assertEquals(10, history.size());
-        assertEquals(6, history.get(0).getId()); // первая добавленная задача удалена (1-5, 6-15)
-        assertEquals(15, history.get(9).getId()); // последняя добавленная задача присутствует
+    void removeTaskFromHistory() {
+        historyManager.add(task1);
+        historyManager.remove(task1.getId());
+        assertTrue(historyManager.getHistory().isEmpty(), "Задача должна быть удалена из истории");
     }
 
-    // Проверяем корректное извлечение истории
     @Test
-    void shouldGetHistory() {
-        HistoryManager historyManager = new InMemoryHistoryManager();
-        Task task1 = new Task("Задача 1", "Описание 1", 1);
-        Task task2 = new Task("Задача 2", "Описание 2", 2);
-
-        historyManager.addTaskInHistoryList(task1);
-        historyManager.addTaskInHistoryList(task2);
-
-        List<Task> history = historyManager.getHistory();
-        assertEquals(2, history.size());
-        assertEquals(task1, history.get(0));
-        assertEquals(task2, history.get(1));
+    void getEntireHistory() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        assertEquals(3, historyManager.getHistory().size(), "История должна содержать все добавленные задачи");
     }
 
+    @Test
+    void removeTaskOnReAddition() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task1);
+        List<Task> history = historyManager.getHistory();
+        assertEquals(2, history.size(), "История должна содержать две задачи");
+        assertEquals(task2, history.get(0), "Первой задачей в истории должна быть задача 2");
+        assertEquals(task1, history.get(1), "Второй задачей в истории должна быть задача 1");
+    }
 }

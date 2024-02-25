@@ -29,7 +29,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task createTask(String titleTask, String description) {
         Task newTask = new Task(titleTask, description, newId());
         taskMap.put(newTask.getId(), newTask);
-        historyManager.addTaskInHistoryList(newTask);
+        historyManager.add(newTask);
         return newTask;
     }
 
