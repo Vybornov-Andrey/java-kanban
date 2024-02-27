@@ -1,10 +1,9 @@
-package service;
-
-
 import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
+import service.Managers;
+import service.TaskManager;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,7 +37,7 @@ public class Main {
 
         System.out.println("\nСписок всех задач и их статусы:");
         for (Task task : taskManager.getAllTasks()) {
-            System.out.println(task.getTitleTask() + " - " + task.getStatus());
+            System.out.println(task);
         }
 
         System.out.println("\nОбновление статуса задачи");

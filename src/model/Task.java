@@ -56,7 +56,12 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(titleTask, description, id);
+    }
+
+    @Override
+    public String toString() {
+        return titleTask + " - " + status;
     }
 }
 

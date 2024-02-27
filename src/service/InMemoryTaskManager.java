@@ -29,7 +29,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task createTask(String titleTask, String description) {
         Task newTask = new Task(titleTask, description, newId());
         taskMap.put(newTask.getId(), newTask);
-        historyManager.addTaskInHistoryList(newTask);
+        historyManager.add(newTask);
         return newTask;
     }
 
@@ -38,14 +38,15 @@ public class InMemoryTaskManager implements TaskManager {
         subtaskMap.put(subtask.getId(), subtask);
         taskMap.put(subtask.getId(), subtask);
 
-        if (subtask instanceof Subtask && ((Subtask) subtask).getEpicId() != 0) {
-            int epicId = ((Subtask) subtask).getEpicId();
+        if (subtask.getEpicId() != 0) { // Убрано ненужное приведение типа и проверка instanceof
+            int epicId = subtask.getEpicId();
             Epic epic = epicMap.get(epicId);
             if (epic != null) {
                 epic.addSubtask(subtask.getId());
             }
         }
     }
+
 
     @Override
     public int newId() {
@@ -98,8 +99,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void updateEpicStatusForSubtask(Subtask subtask) {
-        if (subtask instanceof Subtask && ((Subtask) subtask).getEpicId() != 0) {
-            int epicId = ((Subtask) subtask).getEpicId();
+        if (subtask.getEpicId() != 0) { // Убрано ненужное приведение типа и проверка instanceof
+            int epicId = subtask.getEpicId();
             Epic epic = epicMap.get(epicId);
             if (epic != null) {
                 updateEpicStatus(epic);
